@@ -1,0 +1,62 @@
+<div style="width: 100%; background-color: #e0e0e0; margin-bottom: 10px;">
+  <div id="yearProgress" style="width: 0%; height: 20px; background-color: #4CAF50;"></div>
+</div>
+<p>Year Progress: <span id="yearText">0%</span></p>
+
+<div style="width: 100%; background-color: #e0e0e0; margin-bottom: 10px;">
+  <div id="monthProgress" style="width: 0%; height: 20px; background-color: #2196F3;"></div>
+</div>
+<p>Month Progress: <span id="monthText">0%</span></p>
+
+<div style="width: 100%; background-color: #e0e0e0; margin-bottom: 10px;">
+  <div id="weekProgress" style="width: 0%; height: 20px; background-color: #FFC107;"></div>
+</div>
+<p>Week Progress: <span id="weekText">0%</span></p>
+
+<div style="width: 100%; background-color: #e0e0e0; margin-bottom: 10px;">
+  <div id="dayProgress" style="width: 0%; height: 20px; background-color: #9C27B0;"></div>
+</div>
+<p>Day Progress: <span id="dayText">0%</span></p>
+
+<script>
+
+function updateProgress() {
+  const startDate = new Date("2024-11-01");
+  const endDate = new Date("2025-10-31");
+  const now = new Date();
+
+  const totalDays = (endDate - startDate) / (1000 * 60 * 60 * 24);
+  const daysPassed = (now - startDate) / (1000 * 60 * 60 * 24);
+  const yearProgress = (daysPassed / totalDays) * 100;
+
+  const monthProgress =
+    (now.getDate() /
+      new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()) *
+    100;
+
+  const weekStart = new Date(now);
+  weekStart.setDate(now.getDate() - now.getDay());
+  const weekProgress = ((now - weekStart) / (7 * 24 * 60 * 60 * 1000)) * 100;
+
+  const dayProgress =
+    ((now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) /
+      86400) *
+    100;
+
+  document.getElementById("yearProgress").style.width = yearProgress + "%";
+  document.getElementById("yearText").textContent =
+    yearProgress.toFixed(2) + "%";
+  document.getElementById("monthProgress").style.width = monthProgress + "%";
+  document.getElementById("monthText").textContent =
+    monthProgress.toFixed(2) + "%";
+  document.getElementById("weekProgress").style.width = weekProgress + "%";
+  document.getElementById("weekText").textContent =
+    weekProgress.toFixed(2) + "%";
+  document.getElementById("dayProgress").style.width = dayProgress + "%";
+  document.getElementById("dayText").textContent = dayProgress.toFixed(2) + "%";
+}
+
+setInterval(updateProgress, 1000);
+updateProgress();
+
+  </script>
